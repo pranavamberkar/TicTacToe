@@ -56,13 +56,23 @@ class _TicTacToePageState extends State<TicTacToePage> {
           } else {
             oScore++;
           }
+          _autoReset(); // schedule reset
         } else if (!board.contains('')) {
           winner = 'Draw';
+          _autoReset(); // schedule reset
         } else {
           currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
         }
       });
     }
+  }
+
+  void _autoReset() {
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        resetBoard();
+      }
+    });
   }
 
   bool checkWinner(String player) {
